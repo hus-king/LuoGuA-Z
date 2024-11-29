@@ -9,7 +9,7 @@ int main(){
     char old[110000][20];//n
     int flag[110000];//n
     char full[110000][20];//m
-    char new[110000][20];//k
+    char new1[110000][20];//k
     for(int i=0;i<n;i++){
         scanf("%s",old[i]);
         flag[i]=0;  //0为要输出
@@ -18,7 +18,7 @@ int main(){
         scanf("%s",full[i]);
     }
     for(int i=0;i<k;i++){
-        scanf("%s",new[i]);
+        scanf("%s",new1[i]);
     }
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
@@ -38,8 +38,8 @@ int main(){
         }
     }
     for(int i=0;i<k;i++){
-        // putout[j]=new[i];
-        strcpy(putout[j],new[i]);
+        // putout[j]=new1[i];
+        strcpy(putout[j],new1[i]);
         j++;
     }
     sort(putout,j);
@@ -80,12 +80,6 @@ int compare(const char *a, const char *b) {
     }
 }
 int comparechar(char a,char b){
-    if(a>='A'&&a<='Z'){
-        a=a+32;
-    }
-    if(b>='A'&&b<='Z'){
-        b=b+32;
-    }
     if(a==b){
         return 0;
     }

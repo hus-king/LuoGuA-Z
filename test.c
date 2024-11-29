@@ -64,12 +64,6 @@ int compare(const char *a, const char *b) {
 }
 
 int comparechar(char a, char b) {
-    if (a >= 'A' && a <= 'Z') {
-        a = a + 32;
-    }
-    if (b >= 'A' && b <= 'Z') {
-        b = b + 32;
-    }
     if (a == b) {
         return 0;
     } else if (a > b) {
