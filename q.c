@@ -1,20 +1,98 @@
 #include <stdio.h>
-void out(int a[]);
-void out1(int a[]);
+#include <string.h>
+void sort(char a[][20],int);
+int compare(const char *a, const char *b);
+int comparechar(char a,char b);
 int main(){
-    int a[3]={};
-    scanf("%d%d%d",&a[0],&a[1],&a[2]);
-    out1(a);
+    int n,m,k;
+    scanf("%d%d%d",&n,&m,&k);
+    char old[110000][20];//n
+    int flag[110000];//n
+    char full[110000][20];//m
+    char new[110000][20];//k
+    for(int i=0;i<n;i++){
+        scanf("%s",old[i]);
+        flag[i]=0;  //0为要输出
+    }
+    for(int i=0;i<m;i++){
+        scanf("%s",full[i]);
+    }
+    for(int i=0;i<k;i++){
+        scanf("%s",new[i]);
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(strcmp(old[i],full[j])==0){
+                flag[i]=1;
+                break;
+            }
+        }
+    }
+    char putout[210000][20];
+    int j=0;
+    for(int i=0;i<n;i++){
+        if(flag[i]==0){
+            //putout[j]=old[i];
+            strcpy(putout[j],old[i]);
+            j++;
+        }
+    }
+    for(int i=0;i<k;i++){
+        // putout[j]=new[i];
+        strcpy(putout[j],new[i]);
+        j++;
+    }
+    sort(putout,j);
+    for(int i=0;i<j;i++){
+        puts(putout[i]);
+    }
 }
-void out(int a[]){
-    int b[10]={0};
-    for(int i=0;i<3;i++) b[a[i]]=1;
-    for(int i=0;i<10;i++) if(b[i]==0) printf("%d ",i);
+void sort(char a[][20],int n){
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<n-1-i;j++){
+            if(compare(a[j],a[j+1])>0){     //ascii码小的在前
+                char temp[20];
+                // temp=a[j];
+                strcpy(temp,a[j]);
+                // a[j]=a[j+1];
+                strcpy(a[j],a[j+1]);
+                // a[j+1]=temp;
+                strcpy(a[j+1],temp);
+            }
+        }
+    }
 }
-void out1(int a[]){
-    for(int i=0;i<10;i++){
-        int flag=1;
-        for(int j=0;j<3;j++) if(a[j]==i) flag=0;
-        if(flag) printf("%d ",i);
+int compare(const char *a, const char *b) {
+    int i = 0;
+    while (a[i] != '\0' && b[i] != '\0') {
+        int result = comparechar(a[i], b[i]);
+        if (result != 0) {
+            return result;
+        }
+        i++;
+    }
+    if (a[i] == '\0' && b[i] == '\0') {
+        return 0;
+    } else if (a[i] == '\0') {
+        return -1;
+    } else {
+        return 1;
+    }
+}
+int comparechar(char a,char b){
+    if(a>='A'&&a<='Z'){
+        a=a+32;
+    }
+    if(b>='A'&&b<='Z'){
+        b=b+32;
+    }
+    if(a==b){
+        return 0;
+    }
+    else if(a>b){
+        return 1;
+    }
+    else{
+        return -1;
     }
 }
