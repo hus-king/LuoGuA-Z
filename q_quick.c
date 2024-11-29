@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 void quicksort(char a[][20], int low, int high);
 int partition(char a[][20], int low, int high);
 int compare(const char *a, const char *b);
 int comparechar(char a, char b);
-int hash(const char *str, int size);
-int exists_in_full(char full[][20], int m, const char *str, int *hash_table, int hash_size);
 
 int main() {
     int n, m, k;
@@ -16,7 +13,6 @@ int main() {
     int flag[110000]; // n
     char full[110000][20]; // m
     char new1[110000][20]; // k
-
     for (int i = 0; i < n; i++) {
         scanf("%s", old[i]);
         flag[i] = 0; // 0为要输出
@@ -27,20 +23,14 @@ int main() {
     for (int i = 0; i < k; i++) {
         scanf("%s", new1[i]);
     }
-
-    int hash_size = 2 * m;
-    int *hash_table = (int *)calloc(hash_size, sizeof(int));
-    for (int i = 0; i < m; i++) {
-        int hash_value = hash(full[i], hash_size);
-        hash_table[hash_value] = 1;
-    }
-
     for (int i = 0; i < n; i++) {
-        if (exists_in_full(full, m, old[i], hash_table, hash_size)) {
-            flag[i] = 1;
+        for (int j = 0; j < m; j++) {
+            if (strcmp(old[i], full[j]) == 0) {
+                flag[i] = 1;
+                break;
+            }
         }
     }
-
     char putout[210000][20];
     int j = 0;
     for (int i = 0; i < n; i++) {
@@ -53,13 +43,10 @@ int main() {
         strcpy(putout[j], new1[i]);
         j++;
     }
-
     quicksort(putout, 0, j - 1);
     for (int i = 0; i < j; i++) {
         puts(putout[i]);
     }
-
-    free(hash_table);
 }
 
 void quicksort(char a[][20], int low, int high) {
@@ -116,18 +103,4 @@ int comparechar(char a, char b) {
     } else {
         return -1;
     }
-}
-
-int hash(const char *str, int size) {
-    int hash_value = 0;
-    while (*str) {
-        hash_value = (hash_value * 31 + *str) % size;
-        str++;
-    }
-    return hash_value;
-}
-
-int exists_in_full(char full[][20], int m, const char *str, int *hash_table, int hash_size) {
-    int hash_value = hash(str, hash_size);
-    return hash_table[hash_value];
 }
