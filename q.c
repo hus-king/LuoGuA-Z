@@ -2,7 +2,7 @@
 #include <string.h>
 void sort(char a[][20],int);
 int compare(const char *a, const char *b);
-int comparechar(char a,char b);
+// int comparechar(char a,char b);
 int main(){
     int n,m,k;
     scanf("%d%d%d",&n,&m,&k);
