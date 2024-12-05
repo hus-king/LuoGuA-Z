@@ -2,12 +2,54 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define HASH_SIZE 220000
+
+typedef struct HashNode {
+    char key[20];
+    struct HashNode *next;
+} HashNode;
+
+unsigned int hash(const char *str) {
+    unsigned int hash = 5381;
+    int c;
+    while ((c = *str++)) {
+        hash = ((hash << 5) + hash) + c;
+    }
+    return hash % HASH_SIZE;
+}
+
+void insert(HashNode **hashTable, const char *str) {
+    unsigned int index = hash(str);
+    HashNode *newNode = (HashNode *)malloc(sizeof(HashNode));
+    strcpy(newNode->key, str);
+    newNode->next = hashTable[index];
+    hashTable[index] = newNode;
+}
+
+int search(HashNode **hashTable, const char *str) {
+    unsigned int index = hash(str);
+    HashNode *node = hashTable[index];
+    while (node) {
+        if (strcmp(node->key, str) == 0) {
+            return 1;
+        }
+        node = node->next;
+    }
+    return 0;
+}
+
+void freeHashTable(HashNode **hashTable) {
+    for (int i = 0; i < HASH_SIZE; i++) {
+        HashNode *node = hashTable[i];
+        while (node) {
+            HashNode *temp = node;
+            node = node->next;
+            free(temp);
+        }
+    }
+}
 void quicksort(char a[][20], int low, int high);
 int partition(char a[][20], int low, int high);
-int compare(const char *a, const char *b);
-int comparechar(char a, char b);
-int hash(const char *str, int size);
-int exists_in_full(char full[][20], int m, const char *str, int *hash_table, int hash_size);
 int main() {
     int n, m, k;
     scanf("%d%d%d", &n, &m, &k);
