@@ -8,7 +8,6 @@ int compare(const char *a, const char *b);
 int comparechar(char a, char b);
 int hash(const char *str, int size);
 int exists_in_full(char full[][20], int m, const char *str, int *hash_table, int hash_size);
-
 int main() {
     int n, m, k;
     scanf("%d%d%d", &n, &m, &k);
@@ -58,7 +57,6 @@ int main() {
     for (int i = 0; i < j; i++) {
         puts(putout[i]);
     }
-
     free(hash_table);
 }
 
