@@ -1,5 +1,5 @@
 #include <stdio.h>
 int main()
 {
-    printf("%d",sizeof(int*));
+    char s4[2][]={"abc","xyz"};
 }
